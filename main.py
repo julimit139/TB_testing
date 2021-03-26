@@ -28,23 +28,7 @@ swapped = np.swapaxes(data, 0, 1)
 # creating a Raw object
 raw = mne.io.RawArray(swapped, info)
 
-print(type(raw))
-
-
-# basic operations
-sampling_freq = raw.info['sfreq']
-print(sampling_freq)
-start_stop_seconds = np.array([10, 12])
-start_sample, stop_sample = (start_stop_seconds * sampling_freq).astype(int)
-channel_index = 0
-raw_selection = raw[channel_index, start_sample:stop_sample]
-
-x = raw_selection[1]
-y = raw_selection[0].T
-plt.plot(x, y)
-plt.show()
-
-
+raw.crop(tmin=0.0, tmax=60.0, include_tmax=True).load_data()
 
 
 
